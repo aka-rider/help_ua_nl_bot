@@ -14,8 +14,14 @@ import (
 const (
 	defaultLocale   = "ua"
 	greetings       = "Привіт! Ми — українці в Нідерландах\nБажаєте допомогти Україні?"
-	bye             = "Слава Україні "
 	defaultPollFreq = 3 * time.Second
+	bankDetails     = `
+Stichting Oekraïners in Nederland
+IBAN: NL 97 INGB 0006 5104 66
+SWIFT/BIC: INGBNL2AXXX
+Bank: ING Bank
+Address: Bijlmerdreef 106, 1102 MG Amsterdam, Netherlands
+`
 )
 
 func Run(token string) {
@@ -39,44 +45,77 @@ func Run(token string) {
 	flow.GetRoot().
 		AddWith("once", forward,
 			flow.NewNode("finance", func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "https://bank.gov.ua/ua/news/all/natsionalniy-bank-vidkriv-spetsrahunok-dlya-zboru-koshtiv-na-potrebi-armiyi")
+				e.SetCaption(c, bankDetails)
 				return menu.Forward
 			}),
 			flow.NewNode("humanitarian", forward).
 				Add("clothes", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "Червоний хрест в Нідерландах https://www.rodekruis.nl/")
+					e.SetCaption(c, "ОДЯГ ТА ВЗУТТЯ ПОКИ НЕ ПРИЙМАЮТЬСЯ")
 					return menu.Forward
 				}).
-				Add("meds_food_hygiene", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "TODO: посилання на Excel")
-					return menu.Forward
-				}).
+				AddWith("essentials", forward,
+					flow.NewNode("meds", func(e *menu.Node, c *tb.Callback) int {
+						e.SetCaption(c, "https://docs.google.com/spreadsheets/d/1lcT6IhtkT-1G6rKi7wmxoTe_EhYHnHRtIAjLQATi1bQ/")
+						return menu.Forward
+					}),
+					flow.NewNode("hygiene-food", func(e *menu.Node, c *tb.Callback) int {
+						e.SetCaption(c, "https://docs.google.com/spreadsheets/d/1x320lSGqgqeCpiCBbeGxR2RtYcqJhh7d30XNYGomogc/")
+						return menu.Forward
+					}),
+					flow.NewNode("ammunition", func(e *menu.Node, c *tb.Callback) int {
+						e.SetCaption(c, "https://docs.google.com/spreadsheets/d/1nJWUQYcH3qkzC0fP7Jy8YYntW_fcPQDOXRIBKnVAlfc/")
+						return menu.Forward
+					}),
+					flow.NewNode("reception", func(e *menu.Node, c *tb.Callback) int {
+						e.SetCaption(c, "https://docs.google.com/spreadsheets/d/1W7fxCS8ZAbhsNrGeRzseCN0GD9cJnVMA/")
+						return menu.Forward
+					}),
+					flow.NewNode("back", back),
+				).
 				Add("back", back),
 			flow.NewNode("other", func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "Звяжіться з Іриною +31684326175")
+				e.SetCaption(c, "https://forms.gle/fDZHTH7pnPCNUfJdA")
 				return menu.Forward
 			}),
 			flow.NewNode("back", back),
 		).
 		AddWith("volunteer", forward,
+			flow.NewNode("humanitarian", forward).
+				Add("support", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfIYchO_qFxPFLti-0287FMr7B5ue5_laRq4TG3uSwsN_ZpwQ/viewform")
+					return menu.Forward
+				}).
+				Add("reception", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSenM3-eAq7zj1VfmpYoFSnYFC7qdILmYQ6XY-hxWXbK36FI7w/viewform")
+					return menu.Forward
+				}).
+				Add("logistics", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSe8IzPERiS33i6xJYO3cXWEo3bM4ig9rb8wINzBU49SMr9luQ/viewform")
+					return menu.Forward
+				}).
+				Add("sorting", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfU1JIBAE1Fe7XKg6ewAgTOF7LjnlipwXa8xFS2Xx9UkGZ93w/viewform")
+					return menu.Forward
+				}).
+				Add("requests-ua", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfdT5nlzQiq2SgxEYK5sZ60ZmirugGsn85crxcOc4Fv-cYyVw/viewform")
+					return menu.Forward
+				}).
+				Add("back", back),
 			flow.NewNode("coordination", func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "Звяжіться з Маєю +31648269715")
+				e.SetCaption(c, "https://forms.gle/KKCoYbeqp5PbUxA27")
 				return menu.Forward
 			}),
 			flow.NewNode("events", func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "Звяжіться з Олександром +31615834846")
-				return menu.Forward
-			}),
-			flow.NewNode("humanitarian", func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "Звяжіться з Даною +31644535721 ")
+				e.SetCaption(c, "https://forms.gle/Fh8dxRmjaMaKW5rz6")
 				return menu.Forward
 			}),
 			flow.NewNode("pr", func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "Звяжіться з Анастасіює +31643290389")
+				e.SetCaption(c, "https://forms.gle/j5BuFL7apSpZQg2s9")
 				return menu.Forward
 			}),
 			flow.NewNode("refugees", func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "Звяжіться з Мариною +31646004341")
+				e.SetCaption(c, "https://forms.gle/ihRiN5LwS7Pfzj6C6")
 				return menu.Forward
 			}),
 			flow.NewNode("back", back),
