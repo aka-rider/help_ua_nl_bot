@@ -66,7 +66,7 @@ func Run(token string) {
 						e.SetCaption(c, "https://docs.google.com/spreadsheets/d/1nJWUQYcH3qkzC0fP7Jy8YYntW_fcPQDOXRIBKnVAlfc/")
 						return menu.Forward
 					}),
-					flow.NewNode("reception", func(e *menu.Node, c *tb.Callback) int {
+					flow.NewNode("collection", func(e *menu.Node, c *tb.Callback) int {
 						e.SetCaption(c, "https://docs.google.com/spreadsheets/d/1W7fxCS8ZAbhsNrGeRzseCN0GD9cJnVMA/")
 						return menu.Forward
 					}),
@@ -85,7 +85,7 @@ func Run(token string) {
 					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfIYchO_qFxPFLti-0287FMr7B5ue5_laRq4TG3uSwsN_ZpwQ/viewform")
 					return menu.Forward
 				}).
-				Add("reception", func(e *menu.Node, c *tb.Callback) int {
+				Add("collection", func(e *menu.Node, c *tb.Callback) int {
 					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSenM3-eAq7zj1VfmpYoFSnYFC7qdILmYQ6XY-hxWXbK36FI7w/viewform")
 					return menu.Forward
 				}).
@@ -119,9 +119,10 @@ func Run(token string) {
 				return menu.Forward
 			}),
 			flow.NewNode("back", back),
-		)
+		).
+		Add("language", switchLanguage)
 
-	flow.Build(defaultLocale)
+	flow.Build("ua").Build("en")
 
 	bot.Handle("/start", func(m *tb.Message) {
 		err = flow.Start(m.Sender, greetings, defaultLocale)
@@ -129,31 +130,19 @@ func Run(token string) {
 			log.Println("failed to display the menu:", err)
 		}
 	})
-	// bot.Handle("/stop", func(m *tb.Message) {
-	// 	err = flow.Stop(m.Sender, bye, defaultLocale)
-	// 	if err != nil {
-	// 		log.Println("failed to stop the flow:", err)
-	// 	}
-	// })
 
 	log.Println("running", bot.Me.Username, "...")
 	bot.Start()
 }
 
-func userOrderSushi(e *menu.Node, c *tb.Callback) int {
-	log.Println(c.Sender.Recipient(), "press", e.GetText())
-	e.SetCaption(c, "Added "+e.GetText()+" to your order")
-	return menu.Forward
-}
-
-func userPressLanguage(e *menu.Node, c *tb.Callback) int {
+func switchLanguage(e *menu.Node, c *tb.Callback) int {
 	log.Println(c.Sender.Recipient(), "press", e.GetText())
 	if e.GetLanguage(c) == "en" {
-		e.SetLanguage(c, "ru")
+		e.SetLanguage(c, "ua")
 	} else {
 		e.SetLanguage(c, "en")
 	}
-	return menu.Forward // continue
+	return menu.Forward
 }
 
 func forward(e *menu.Node, c *tb.Callback) int {
@@ -169,6 +158,7 @@ func back(e *menu.Node, c *tb.Callback) int {
 }
 
 func main() {
-	token := os.Getenv("HELP_UA_NL_BOT_TOKEN")
+	//token := os.Getenv("HELP_UA_NL_BOT_TOKEN")
+	token := os.Getenv("TEST_HELP_UA_NL_BOT_TOKEN")
 	Run(token)
 }
