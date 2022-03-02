@@ -68,10 +68,14 @@ func Run(token string) {
 			flow.NewNode("humanitarian", forward).
 				Add("clothes", func(e *menu.Node, c *tb.Callback) int {
 					if e.GetLanguage(c) == "ua" {
-						e.SetCaption(c, "НАРАЗІ НЕМАЄ ПОТРЕБИ В ОДЯГУ ТА ВЗУТТІ. БУДЬ ЛАСКА, НЕ НЕСІТЬ.")
+						e.SetCaption(c, "🚫 НАРАЗІ НЕМАЄ ПОТРЕБИ В ОДЯГУ, ВЗУТТІ ТА ЇЖІ. БУДЬ ЛАСКА, НЕ НЕСІТЬ.")
 					} else {
-						e.SetCaption(c, "THERE IS NO NEED FOR CLOTHES AND SHOES")
+						e.SetCaption(c, "🚫 THERE IS NO NEED FOR CLOTHES, SHOES, AND FOOD.")
 					}
+					return menu.Forward
+				}).
+				Add("collection", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://ua-in-nl.notion.site/Collection-points-in-the-Netherlands-3accfa7184ed43b0aab86a298ee98d87")
 					return menu.Forward
 				}).
 				AddWith("essentials", forward,
@@ -85,10 +89,6 @@ func Run(token string) {
 					}),
 					flow.NewNode("ammunition", func(e *menu.Node, c *tb.Callback) int {
 						e.SetCaption(c, "https://docs.google.com/spreadsheets/d/1nJWUQYcH3qkzC0fP7Jy8YYntW_fcPQDOXRIBKnVAlfc/")
-						return menu.Forward
-					}),
-					flow.NewNode("collection", func(e *menu.Node, c *tb.Callback) int {
-						e.SetCaption(c, "https://docs.google.com/spreadsheets/d/1W7fxCS8ZAbhsNrGeRzseCN0GD9cJnVMA/")
 						return menu.Forward
 					}),
 					flow.NewNode("back", back),
@@ -110,7 +110,7 @@ func Run(token string) {
 					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSenM3-eAq7zj1VfmpYoFSnYFC7qdILmYQ6XY-hxWXbK36FI7w/viewform")
 					return menu.Forward
 				}).
-				Add("logistics", func(e *menu.Node, c *tb.Callback) int {
+				Add("drivers", func(e *menu.Node, c *tb.Callback) int {
 					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSe8IzPERiS33i6xJYO3cXWEo3bM4ig9rb8wINzBU49SMr9luQ/viewform")
 					return menu.Forward
 				}).
@@ -124,6 +124,18 @@ func Run(token string) {
 				}).
 				Add("call-center", func(e *menu.Node, c *tb.Callback) int {
 					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLScUkkX7ZsI2EV-KgXjdj8PmWDpE4SmbSqNUEtxfLUmas2Gizg/viewform")
+					return menu.Forward
+				}).
+				Add("coordination", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSeQ4pQGOV9HDP1W62bon8R47N3IzKTzDe71O81WeD5Ey6XOsw/viewform")
+					return menu.Forward
+				}).
+				Add("invoices", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSe8OdvE_3-3Hg--wPIwSOp2eXrJnoEVEY6EgHeQD-XiBhjAnw/viewform")
+					return menu.Forward
+				}).
+				Add("logistics", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSelQ8lkUGjhZkC-m6M01eqszuMkz01loHI2zBfTerKl6ki6YA/viewform")
 					return menu.Forward
 				}).
 				Add("back", back),
