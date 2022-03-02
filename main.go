@@ -155,6 +155,10 @@ func Run(token string) {
 				e.SetCaption(c, "https://forms.gle/ihRiN5LwS7Pfzj6C6")
 				return menu.Forward
 			}),
+			flow.NewNode("other", func(e *menu.Node, c *tb.Callback) int {
+				e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfpmhjq1O92sD5GmvD_X4J1AkZ4j8Q-tPW_KBQiBdTKcvcjHw/viewform")
+				return menu.Forward
+			}),
 			flow.NewNode("back", back),
 		).
 		Add("language", switchLanguage)
