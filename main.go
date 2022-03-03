@@ -100,7 +100,7 @@ func Run(token string) {
 			}),
 			flow.NewNode("back", back),
 		).
-		AddWith("volunteer", forward,
+		AddWith("volunteer", volunteerMenu,
 			flow.NewNode("humanitarian", forward).
 				Add("support", func(e *menu.Node, c *tb.Callback) int {
 					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfIYchO_qFxPFLti-0287FMr7B5ue5_laRq4TG3uSwsN_ZpwQ/viewform")
@@ -226,6 +226,15 @@ func back(e *menu.Node, c *tb.Callback) int {
 		e.SetCaption(c, startMsg_en)
 	}
 	return menu.Back
+}
+
+func volunteerMenu(e *menu.Node, c *tb.Callback) int {
+	if e.GetLanguage(c) != "ua" {
+		e.SetCaption(c, "🚫 Sorry, at the moment, we need only Ukrainian-speaking volunteers")
+		return menu.Back
+	}
+
+	return forward(e, c)
 }
 
 func main() {
