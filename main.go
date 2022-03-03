@@ -61,10 +61,16 @@ func Run(token string) {
 
 	flow.GetRoot().
 		AddWith("once", forward,
-			flow.NewNode("finance", func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, bankDetails)
-				return menu.Forward
-			}),
+			flow.NewNode("finance", forward).
+				Add("bank-details", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, bankDetails)
+					return menu.Forward
+				}).
+				Add("ideal", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://www.ing.nl/particulier/betaalverzoek/index.html?trxid=T88grbh6uHxwib0wHhPs3EkjmF9BfT75")
+					return menu.Forward
+				}).
+				Add("back", back),
 			flow.NewNode("humanitarian", forward).
 				Add("clothes", func(e *menu.Node, c *tb.Callback) int {
 					if e.GetLanguage(c) == "ua" {
@@ -136,10 +142,6 @@ func Run(token string) {
 				}).
 				Add("logistics", func(e *menu.Node, c *tb.Callback) int {
 					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSelQ8lkUGjhZkC-m6M01eqszuMkz01loHI2zBfTerKl6ki6YA/viewform")
-					return menu.Forward
-				}).
-				Add("notion-db-specialist", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSe5tOLhXKASSgnjWFud5UCR42a0xS-zNA0G7yUc6Lna5b4Jew/viewform")
 					return menu.Forward
 				}).
 				Add("slack-admin", func(e *menu.Node, c *tb.Callback) int {
