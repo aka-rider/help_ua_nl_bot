@@ -138,10 +138,6 @@ func Run(token string) {
 					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSelQ8lkUGjhZkC-m6M01eqszuMkz01loHI2zBfTerKl6ki6YA/viewform")
 					return menu.Forward
 				}).
-				Add("notion-db-specialist", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSe5tOLhXKASSgnjWFud5UCR42a0xS-zNA0G7yUc6Lna5b4Jew/viewform")
-					return menu.Forward
-				}).
 				Add("slack-admin", func(e *menu.Node, c *tb.Callback) int {
 					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfhK56DKq6AIwPe52ADbOH18SmbfINDoLsr2VfoP-uVtPaLiA/viewform")
 					return menu.Forward
