@@ -138,6 +138,26 @@ func Run(token string) {
 					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSelQ8lkUGjhZkC-m6M01eqszuMkz01loHI2zBfTerKl6ki6YA/viewform")
 					return menu.Forward
 				}).
+				Add("notion-db-specialist", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSe5tOLhXKASSgnjWFud5UCR42a0xS-zNA0G7yUc6Lna5b4Jew/viewform")
+					return menu.Forward
+				}).
+				Add("slack-admin", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfhK56DKq6AIwPe52ADbOH18SmbfINDoLsr2VfoP-uVtPaLiA/viewform")
+					return menu.Forward
+				}).
+				Add("pm-procurement", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSeaZYYORtpx1Hz7HchtIBPeAdUl53KAjRuicxgaLASazr27Jg/viewform")
+					return menu.Forward
+				}).
+				Add("warehouse-sorting-contact", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfLP3ZoEFesZ5iClBoQzJz7DqAkmFzlNtk1aTSKimkhYuS5Uw/viewform")
+					return menu.Forward
+				}).
+				Add("sorting-supervisor", func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSd0SRtWoi9PS5U8pPXEgaAnTEOUm1FxQS2_R4gLrBesESYDQQ/viewform")
+					return menu.Forward
+				}).
 				Add("back", back),
 			flow.NewNode("coordination", func(e *menu.Node, c *tb.Callback) int {
 				e.SetCaption(c, "https://forms.gle/KKCoYbeqp5PbUxA27")
