@@ -107,78 +107,12 @@ func Run(token string) {
 			flow.NewNode("back", back),
 		).
 		AddWith("volunteer", volunteerMenu,
-			flow.NewNode("humanitarian", forward).
-				Add("support", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfIYchO_qFxPFLti-0287FMr7B5ue5_laRq4TG3uSwsN_ZpwQ/viewform")
-					return menu.Forward
-				}).
-				Add("collection", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSenM3-eAq7zj1VfmpYoFSnYFC7qdILmYQ6XY-hxWXbK36FI7w/viewform")
-					return menu.Forward
-				}).
-				Add("drivers", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSe8IzPERiS33i6xJYO3cXWEo3bM4ig9rb8wINzBU49SMr9luQ/viewform")
-					return menu.Forward
-				}).
-				Add("sorting", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfU1JIBAE1Fe7XKg6ewAgTOF7LjnlipwXa8xFS2Xx9UkGZ93w/viewform")
-					return menu.Forward
-				}).
-				Add("requests-ua", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfdT5nlzQiq2SgxEYK5sZ60ZmirugGsn85crxcOc4Fv-cYyVw/viewform")
-					return menu.Forward
-				}).
-				Add("call-center", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLScUkkX7ZsI2EV-KgXjdj8PmWDpE4SmbSqNUEtxfLUmas2Gizg/viewform")
-					return menu.Forward
-				}).
-				Add("coordination", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSeQ4pQGOV9HDP1W62bon8R47N3IzKTzDe71O81WeD5Ey6XOsw/viewform")
-					return menu.Forward
-				}).
-				Add("invoices", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSe8OdvE_3-3Hg--wPIwSOp2eXrJnoEVEY6EgHeQD-XiBhjAnw/viewform")
-					return menu.Forward
-				}).
-				Add("logistics", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSelQ8lkUGjhZkC-m6M01eqszuMkz01loHI2zBfTerKl6ki6YA/viewform")
-					return menu.Forward
-				}).
-				Add("slack-admin", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfhK56DKq6AIwPe52ADbOH18SmbfINDoLsr2VfoP-uVtPaLiA/viewform")
-					return menu.Forward
-				}).
-				Add("pm-procurement", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSeaZYYORtpx1Hz7HchtIBPeAdUl53KAjRuicxgaLASazr27Jg/viewform")
-					return menu.Forward
-				}).
-				Add("warehouse-sorting-contact", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfLP3ZoEFesZ5iClBoQzJz7DqAkmFzlNtk1aTSKimkhYuS5Uw/viewform")
-					return menu.Forward
-				}).
-				Add("sorting-supervisor", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSd0SRtWoi9PS5U8pPXEgaAnTEOUm1FxQS2_R4gLrBesESYDQQ/viewform")
-					return menu.Forward
-				}).
-				Add("back", back),
-			flow.NewNode("coordination", func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "https://forms.gle/KKCoYbeqp5PbUxA27")
+			flow.NewNode("drivers", func(e *menu.Node, c *tb.Callback) int {
+				e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSe8IzPERiS33i6xJYO3cXWEo3bM4ig9rb8wINzBU49SMr9luQ/viewform")
 				return menu.Forward
 			}),
-			flow.NewNode("events", func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "https://forms.gle/Fh8dxRmjaMaKW5rz6")
-				return menu.Forward
-			}),
-			flow.NewNode("pr", func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "https://forms.gle/j5BuFL7apSpZQg2s9")
-				return menu.Forward
-			}),
-			flow.NewNode("refugees", func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "https://forms.gle/ihRiN5LwS7Pfzj6C6")
-				return menu.Forward
-			}),
-			flow.NewNode("other", func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfpmhjq1O92sD5GmvD_X4J1AkZ4j8Q-tPW_KBQiBdTKcvcjHw/viewform")
+			flow.NewNode("general-support", func(e *menu.Node, c *tb.Callback) int {
+				e.SetCaption(c, "https://forms.gle/5Ep4k8KiBn48jyeF9")
 				return menu.Forward
 			}),
 			flow.NewNode("back", back),
