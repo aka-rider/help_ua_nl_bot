@@ -139,6 +139,10 @@ func Run(token string) {
 			}),
 			flow.NewNode("back", back),
 		).
+		Add("refuge", func(e *menu.Node, c *tb.Callback) int {
+			e.SetCaption(c, "https://ua-in-nl.notion.site/47734d2f92dc4a79954afa6e8d9a89d6")
+			return menu.Forward
+		}).
 		Add("language", switchLanguage)
 
 	flow.Build("ua").Build("en")
