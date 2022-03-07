@@ -61,16 +61,10 @@ func Run(token string) {
 
 	flow.GetRoot().
 		AddWith("once", forward,
-			flow.NewNode("finance", forward).
-				Add("bank-details", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, bankDetails)
-					return menu.Forward
-				}).
-				Add("ideal", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://www.ing.nl/particulier/betaalverzoek/index.html?trxid=T88grbh6uHxwib0wHhPs3EkjmF9BfT75")
-					return menu.Forward
-				}).
-				Add("back", back),
+			flow.NewNode("finance", func(e *menu.Node, c *tb.Callback) int {
+				e.SetCaption(c, bankDetails)
+				return menu.Forward
+			}),
 			flow.NewNode("humanitarian", forward).
 				Add("clothes", func(e *menu.Node, c *tb.Callback) int {
 					if e.GetLanguage(c) == "ua" {
