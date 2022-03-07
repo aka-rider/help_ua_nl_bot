@@ -79,20 +79,18 @@ func Run(token string) {
 					return menu.Forward
 				}).
 				AddWith("essentials", forward,
-					flow.NewNode("meds", forward).
-						Add("medication_and_dosage", func(e *menu.Node, c *tb.Callback) int {
-							e.SetCaption(c, "https://help-ukraine.nl/medication-dosage")
-							return menu.Forward
-						}).
-						Add("medical_consumables", func(e *menu.Node, c *tb.Callback) int {
-							e.SetCaption(c, "https://help-ukraine.nl/medical-consumables")
-							return menu.Forward
-						}).
-						Add("medical_equipment", func(e *menu.Node, c *tb.Callback) int {
-							e.SetCaption(c, "https://help-ukraine.nl/medical-equipment")
-							return menu.Forward
-						}).
-						Add("back", back),
+					flow.NewNode("medication_and_dosage", func(e *menu.Node, c *tb.Callback) int {
+						e.SetCaption(c, "https://help-ukraine.nl/medication-dosage")
+						return menu.Forward
+					}),
+					flow.NewNode("medical_consumables", func(e *menu.Node, c *tb.Callback) int {
+						e.SetCaption(c, "https://help-ukraine.nl/medical-consumables")
+						return menu.Forward
+					}),
+					flow.NewNode("medical_equipment", func(e *menu.Node, c *tb.Callback) int {
+						e.SetCaption(c, "https://help-ukraine.nl/medical-equipment")
+						return menu.Forward
+					}),
 					flow.NewNode("back", back),
 				).
 				Add("back", back),
