@@ -93,14 +93,6 @@ func Run(token string) {
 							return menu.Forward
 						}).
 						Add("back", back),
-					flow.NewNode("hygiene-food", func(e *menu.Node, c *tb.Callback) int {
-						e.SetCaption(c, "https://docs.google.com/spreadsheets/d/1x320lSGqgqeCpiCBbeGxR2RtYcqJhh7d30XNYGomogc/")
-						return menu.Forward
-					}),
-					flow.NewNode("ammunition", func(e *menu.Node, c *tb.Callback) int {
-						e.SetCaption(c, "https://docs.google.com/spreadsheets/d/1nJWUQYcH3qkzC0fP7Jy8YYntW_fcPQDOXRIBKnVAlfc/")
-						return menu.Forward
-					}),
 					flow.NewNode("back", back),
 				).
 				Add("back", back),
@@ -143,7 +135,7 @@ func Run(token string) {
 			}),
 			flow.NewNode("back", back),
 		).
-		Add("refuge", func(e *menu.Node, c *tb.Callback) int {
+		Add("refugee", func(e *menu.Node, c *tb.Callback) int {
 			e.SetCaption(c, "https://help-ukraine.nl/refugee")
 			return menu.Forward
 		}).
