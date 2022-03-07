@@ -81,14 +81,24 @@ func Run(token string) {
 					return menu.Forward
 				}).
 				Add("collection", func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://ua-in-nl.notion.site/Collection-points-in-the-Netherlands-3accfa7184ed43b0aab86a298ee98d87")
+					e.SetCaption(c, "https://help-ukraine.nl/collection-points-in-the-netherlands")
 					return menu.Forward
 				}).
 				AddWith("essentials", forward,
-					flow.NewNode("meds", func(e *menu.Node, c *tb.Callback) int {
-						e.SetCaption(c, "https://docs.google.com/spreadsheets/d/1lcT6IhtkT-1G6rKi7wmxoTe_EhYHnHRtIAjLQATi1bQ/")
-						return menu.Forward
-					}),
+					flow.NewNode("meds", forward).
+						Add("medication_and_dosage", func(e *menu.Node, c *tb.Callback) int {
+							e.SetCaption(c, "https://help-ukraine.nl/medication-dosage")
+							return menu.Forward
+						}).
+						Add("medical_consumables", func(e *menu.Node, c *tb.Callback) int {
+							e.SetCaption(c, "https://help-ukraine.nl/medical-consumables")
+							return menu.Forward
+						}).
+						Add("medical_equipment", func(e *menu.Node, c *tb.Callback) int {
+							e.SetCaption(c, "https://help-ukraine.nl/medical-equipment")
+							return menu.Forward
+						}).
+						Add("back", back),
 					flow.NewNode("hygiene-food", func(e *menu.Node, c *tb.Callback) int {
 						e.SetCaption(c, "https://docs.google.com/spreadsheets/d/1x320lSGqgqeCpiCBbeGxR2RtYcqJhh7d30XNYGomogc/")
 						return menu.Forward
