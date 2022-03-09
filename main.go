@@ -13,7 +13,8 @@ import (
 )
 
 const (
-	defaultLocale = "ua"
+	ua = "ua"
+	en = "en"
 
 	startMsg_ua = `Відправте /start щоб почати спочатку`
 	startMsg_en = `Enter /start to begin or restart`
@@ -39,6 +40,28 @@ Address: Bijlmerdreef 106, 1102 MG Amsterdam, Netherlands
 `
 
 	defaultPollFreq = 3 * time.Second
+
+	once                = "once"
+	finance             = "finance"
+	humanitarian        = "humanitarian"
+	clothes             = "clothes"
+	collection          = "collection"
+	essentials          = "essentials"
+	medicationAndDosage = "medication_and_dosage"
+	medicalConsumables  = "medical_consumables"
+	medicalEquipment    = "medical_equipment"
+	volunteer           = "volunteer"
+	drivers             = "drivers"
+	generalSupport      = "general-support"
+	coordination        = "coordination"
+	events              = "events"
+	pr                  = "pr"
+	refugees            = "refugees"
+	refugee             = "refugee"
+	hotline             = "hotline"
+	language            = "language"
+	other               = "other"
+	backLabel           = "back"
 )
 
 func Run(token string) {
@@ -50,7 +73,7 @@ func Run(token string) {
 		panic(err)
 	}
 
-	if err := tr.Init("lang", defaultLocale); err != nil {
+	if err := tr.Init("lang", ua); err != nil {
 		panic(err)
 	}
 
@@ -60,89 +83,98 @@ func Run(token string) {
 	}
 
 	flow.GetRoot().
-		AddWith("once", forward,
-			flow.NewNode("finance", func(e *menu.Node, c *tb.Callback) int {
+		AddWith(once, forward,
+			flow.NewNode(finance, func(e *menu.Node, c *tb.Callback) int {
 				e.SetCaption(c, bankDetails)
 				return menu.Forward
 			}),
-			flow.NewNode("humanitarian", forward).
-				Add("clothes", func(e *menu.Node, c *tb.Callback) int {
-					if e.GetLanguage(c) == "ua" {
+			flow.NewNode(humanitarian, forward).
+				Add(clothes, func(e *menu.Node, c *tb.Callback) int {
+					if e.GetLanguage(c) == ua {
 						e.SetCaption(c, "🚫 НАРАЗІ НЕМАЄ ПОТРЕБИ В ОДЯГУ, ВЗУТТІ ТА ЇЖІ. БУДЬ ЛАСКА, НЕ НЕСІТЬ.")
 					} else {
 						e.SetCaption(c, "🚫 THERE IS NO NEED FOR CLOTHES, SHOES, AND FOOD.")
 					}
 					return menu.Forward
 				}).
-				Add("collection", func(e *menu.Node, c *tb.Callback) int {
+				Add(collection, func(e *menu.Node, c *tb.Callback) int {
 					e.SetCaption(c, "https://help-ukraine.nl/collection-points-in-the-netherlands")
 					return menu.Forward
 				}).
-				AddWith("essentials", forward,
-					flow.NewNode("medication_and_dosage", func(e *menu.Node, c *tb.Callback) int {
+				AddWith(essentials, forward,
+					flow.NewNode(medicationAndDosage, func(e *menu.Node, c *tb.Callback) int {
 						e.SetCaption(c, "https://help-ukraine.nl/medication-dosage")
 						return menu.Forward
 					}),
-					flow.NewNode("medical_consumables", func(e *menu.Node, c *tb.Callback) int {
+					flow.NewNode(medicalConsumables, func(e *menu.Node, c *tb.Callback) int {
 						e.SetCaption(c, "https://help-ukraine.nl/medical-consumables")
 						return menu.Forward
 					}),
-					flow.NewNode("medical_equipment", func(e *menu.Node, c *tb.Callback) int {
+					flow.NewNode(medicalEquipment, func(e *menu.Node, c *tb.Callback) int {
 						e.SetCaption(c, "https://help-ukraine.nl/medical-equipment")
 						return menu.Forward
 					}),
-					flow.NewNode("back", back),
+					flow.NewNode(backLabel, back),
 				).
-				Add("back", back),
-			flow.NewNode("other", func(e *menu.Node, c *tb.Callback) int {
+				Add(backLabel, back),
+			flow.NewNode(other, func(e *menu.Node, c *tb.Callback) int {
 				e.SetCaption(c, "https://forms.gle/fDZHTH7pnPCNUfJdA")
 				return menu.Forward
 			}),
-			flow.NewNode("back", back),
+			flow.NewNode(backLabel, back),
 		).
-		AddWith("volunteer", volunteerMenu,
-			flow.NewNode("humanitarian", forward).
-				Add("drivers", func(e *menu.Node, c *tb.Callback) int {
+		AddWith(volunteer, volunteerMenu,
+			flow.NewNode(humanitarian, forward).
+				Add(drivers, func(e *menu.Node, c *tb.Callback) int {
 					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSe8IzPERiS33i6xJYO3cXWEo3bM4ig9rb8wINzBU49SMr9luQ/viewform")
 					return menu.Forward
 				}).
-				Add("general-support", func(e *menu.Node, c *tb.Callback) int {
+				Add(generalSupport, func(e *menu.Node, c *tb.Callback) int {
 					e.SetCaption(c, "https://forms.gle/5Ep4k8KiBn48jyeF9")
 					return menu.Forward
 				}).
-				Add("back", back),
-			flow.NewNode("coordination", func(e *menu.Node, c *tb.Callback) int {
+				Add(backLabel, back),
+			flow.NewNode(coordination, func(e *menu.Node, c *tb.Callback) int {
 				e.SetCaption(c, "https://forms.gle/KKCoYbeqp5PbUxA27")
 				return menu.Forward
 			}),
-			flow.NewNode("events", func(e *menu.Node, c *tb.Callback) int {
+			flow.NewNode(events, func(e *menu.Node, c *tb.Callback) int {
 				e.SetCaption(c, "https://forms.gle/Fh8dxRmjaMaKW5rz6")
 				return menu.Forward
 			}),
-			flow.NewNode("pr", func(e *menu.Node, c *tb.Callback) int {
+			flow.NewNode(pr, func(e *menu.Node, c *tb.Callback) int {
 				e.SetCaption(c, "https://forms.gle/j5BuFL7apSpZQg2s9")
 				return menu.Forward
 			}),
-			flow.NewNode("refugees", func(e *menu.Node, c *tb.Callback) int {
+			flow.NewNode(refugees, func(e *menu.Node, c *tb.Callback) int {
 				e.SetCaption(c, "https://forms.gle/ihRiN5LwS7Pfzj6C6")
 				return menu.Forward
 			}),
-			flow.NewNode("other", func(e *menu.Node, c *tb.Callback) int {
+			flow.NewNode(other, func(e *menu.Node, c *tb.Callback) int {
 				e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfpmhjq1O92sD5GmvD_X4J1AkZ4j8Q-tPW_KBQiBdTKcvcjHw/viewform")
 				return menu.Forward
 			}),
-			flow.NewNode("back", back),
+			flow.NewNode(backLabel, back),
 		).
-		Add("refugee", func(e *menu.Node, c *tb.Callback) int {
+		Add(refugee, func(e *menu.Node, c *tb.Callback) int {
 			e.SetCaption(c, "https://help-ukraine.nl/refugee")
 			return menu.Forward
 		}).
-		Add("language", switchLanguage)
+		Add(hotline, forward).
+		Add(language, switchLanguage)
 
-	flow.Build("ua").Build("en")
+	nodeUrls := NodeKeyUrls{
+		{hotline, "https://t.me/ukrainians_nl_support_bot"},
+	}.toNodeUrls(flow)
+
+	for _, locale := range locales() {
+		flow.Build(locale)
+	}
+
+	nodeUrls.addUrls()
 
 	bot.Handle("/start", func(m *tb.Message) {
-		err = flow.Start(m.Sender, greetings_ua, defaultLocale)
+		err = flow.Start(m.Sender, greetings_ua, ua)
 		if err != nil {
 			log.Println("failed to display the menu:", err)
 		}
@@ -152,13 +184,17 @@ func Run(token string) {
 	bot.Start()
 }
 
+func locales() []string {
+	return []string{ua, en}
+}
+
 func switchLanguage(e *menu.Node, c *tb.Callback) int {
 	log.Println(c.Sender.Recipient(), "press", e.GetText())
-	if e.GetLanguage(c) == "en" {
-		e.SetLanguage(c, "ua")
+	if e.GetLanguage(c) == en {
+		e.SetLanguage(c, ua)
 		e.SetCaption(c, greetings_ua)
 	} else {
-		e.SetLanguage(c, "en")
+		e.SetLanguage(c, en)
 		e.SetCaption(c, greetings_en)
 	}
 	return menu.Forward
@@ -166,7 +202,7 @@ func switchLanguage(e *menu.Node, c *tb.Callback) int {
 
 func forward(e *menu.Node, c *tb.Callback) int {
 	log.Println(c.Sender.Recipient(), "->", e.GetText())
-	if e.GetLanguage(c) == "ua" {
+	if e.GetLanguage(c) == ua {
 		e.SetCaption(c, startMsg_ua)
 	} else {
 		e.SetCaption(c, startMsg_en)
@@ -176,7 +212,7 @@ func forward(e *menu.Node, c *tb.Callback) int {
 
 func back(e *menu.Node, c *tb.Callback) int {
 	log.Println(c.Sender.Recipient(), "<-", e.GetText())
-	if e.GetLanguage(c) == "ua" {
+	if e.GetLanguage(c) == ua {
 		e.SetCaption(c, startMsg_ua)
 	} else {
 		e.SetCaption(c, startMsg_en)
@@ -185,7 +221,7 @@ func back(e *menu.Node, c *tb.Callback) int {
 }
 
 func volunteerMenu(e *menu.Node, c *tb.Callback) int {
-	if e.GetLanguage(c) != "ua" {
+	if e.GetLanguage(c) != ua {
 		e.SetCaption(c, "🚫 Sorry, at the moment, we need only Ukrainian-speaking volunteers")
 		return menu.Back
 	}
