@@ -51,12 +51,6 @@ Address: Bijlmerdreef 106, 1102 MG Amsterdam, Netherlands
 	medicalConsumables  = "medical_consumables"
 	medicalEquipment    = "medical_equipment"
 	volunteer           = "volunteer"
-	drivers             = "drivers"
-	generalSupport      = "general-support"
-	coordination        = "coordination"
-	events              = "events"
-	pr                  = "pr"
-	refugees            = "refugees"
 	refugee             = "refugee"
 	hotline             = "hotline"
 	language            = "language"
@@ -123,39 +117,7 @@ func Run(token string) {
 			}),
 			flow.NewNode(backLabel, back),
 		).
-		AddWith(volunteer, volunteerMenu,
-			flow.NewNode(humanitarian, forward).
-				Add(drivers, func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSe8IzPERiS33i6xJYO3cXWEo3bM4ig9rb8wINzBU49SMr9luQ/viewform")
-					return menu.Forward
-				}).
-				Add(generalSupport, func(e *menu.Node, c *tb.Callback) int {
-					e.SetCaption(c, "https://forms.gle/5Ep4k8KiBn48jyeF9")
-					return menu.Forward
-				}).
-				Add(backLabel, back),
-			flow.NewNode(coordination, func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "https://forms.gle/KKCoYbeqp5PbUxA27")
-				return menu.Forward
-			}),
-			flow.NewNode(events, func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "https://forms.gle/Fh8dxRmjaMaKW5rz6")
-				return menu.Forward
-			}),
-			flow.NewNode(pr, func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "https://forms.gle/j5BuFL7apSpZQg2s9")
-				return menu.Forward
-			}),
-			flow.NewNode(refugees, func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "https://forms.gle/ihRiN5LwS7Pfzj6C6")
-				return menu.Forward
-			}),
-			flow.NewNode(other, func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, "https://docs.google.com/forms/d/e/1FAIpQLSfpmhjq1O92sD5GmvD_X4J1AkZ4j8Q-tPW_KBQiBdTKcvcjHw/viewform")
-				return menu.Forward
-			}),
-			flow.NewNode(backLabel, back),
-		).
+		Add(volunteer, forward).
 		Add(refugee, func(e *menu.Node, c *tb.Callback) int {
 			e.SetCaption(c, "https://help-ukraine.nl/refugee")
 			return menu.Forward
@@ -165,6 +127,7 @@ func Run(token string) {
 
 	nodeUrls := NodeKeyUrls{
 		{hotline, "https://t.me/ukrainians_nl_support_bot"},
+		{volunteer, "https://help-ukraine.nl/volunteers"},
 	}.toNodeUrls(flow)
 
 	for _, locale := range locales() {
@@ -218,15 +181,6 @@ func back(e *menu.Node, c *tb.Callback) int {
 		e.SetCaption(c, startMsg_en)
 	}
 	return menu.Back
-}
-
-func volunteerMenu(e *menu.Node, c *tb.Callback) int {
-	if e.GetLanguage(c) != ua {
-		e.SetCaption(c, "🚫 Sorry, at the moment, we need only Ukrainian-speaking volunteers")
-		return menu.Back
-	}
-
-	return forward(e, c)
 }
 
 func main() {
