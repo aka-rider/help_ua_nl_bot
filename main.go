@@ -43,6 +43,8 @@ Address: Bijlmerdreef 106, 1102 MG Amsterdam, Netherlands
 
 	once                = "once"
 	finance             = "finance"
+	bankTransfer        = "bank_transfer"
+	onlinePayment       = "online_payment"
 	humanitarian        = "humanitarian"
 	clothes             = "clothes"
 	collection          = "collection"
@@ -78,10 +80,13 @@ func Run(token string) {
 
 	flow.GetRoot().
 		AddWith(once, forward,
-			flow.NewNode(finance, func(e *menu.Node, c *tb.Callback) int {
-				e.SetCaption(c, bankDetails)
-				return menu.Forward
-			}),
+			flow.NewNode(finance, forward).
+				Add(bankTransfer, func(e *menu.Node, c *tb.Callback) int {
+					e.SetCaption(c, bankDetails)
+					return menu.Forward
+				}).
+				Add(onlinePayment, forward).
+				Add(backLabel, back),
 			flow.NewNode(humanitarian, forward).
 				Add(clothes, func(e *menu.Node, c *tb.Callback) int {
 					if e.GetLanguage(c) == ua {
@@ -128,6 +133,7 @@ func Run(token string) {
 	nodeUrls := NodeKeyUrls{
 		{hotline, "https://t.me/ukrainians_nl_support_bot"},
 		{volunteer, "https://help-ukraine.nl/volunteers"},
+		{onlinePayment, "https://useplink.com/payment/yIXtkzDtTlBGUBxiRQVaA/"},
 	}.toNodeUrls(flow)
 
 	for _, locale := range locales() {
